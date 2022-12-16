@@ -34,13 +34,7 @@ li {
   border-radius: 5px;
   background: white;
 }
-.btn:hover {
-  cursor: pointer;
-}
-button:active {
-  outline: none;
-  border: none;
-}
+
 .fs20 {
   font-size: 20px;
   font-weight: bold;
@@ -121,8 +115,17 @@ table, th, td {
 }
 th, td {
   padding: 10px;
-  min-width: 150px;
+  min-width: 200px;
   text-align: left;
+}
+
+.container{
+  margin: auto;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 tbody tr:nth-child(odd) {
