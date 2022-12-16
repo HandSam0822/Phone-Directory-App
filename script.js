@@ -177,7 +177,3 @@ const UserData = {
   
   //Initilize.
   controller.init();
-  
-  //Set this on/off to access the state from browser for bug checking.
-  window.UserData = UserData;
-  
