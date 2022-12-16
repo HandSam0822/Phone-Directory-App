@@ -15,7 +15,7 @@ function addContact() {
     validator.mobileValidator(mobile) && 
     validator.emailValidator(email)) {
         
-
+        insertRow(name, mobile, email)
         nameElement.value = ''
         mobileElement.value = ''
         emailElement.value = ''
@@ -50,4 +50,9 @@ function addContact() {
             }
             return true;
         }
+    }
+    function insertRow(name, mobile, email) {
+        let tbodyRef = document.getElementById('summaryTable').getElementsByTagName('tbody')[0];
+        tbodyRef.insertRow().innerHTML = "<td>" +name+ "</td>"+
+        "<td>" +mobile+ "</td>"+ "<td>" + email + "</td>"
     }
