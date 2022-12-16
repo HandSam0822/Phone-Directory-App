@@ -26,14 +26,17 @@ const UserData = {
     const displayData = document.querySelector("tbody");
     const search = document.getElementById("search");
     const searchResult = document.getElementById("noResult");
-
+    const tableColumnName = document.getElementById("nameColumn");
+    const tableName = document.getElementById("summaryTable");
     return {
       inputList,
       error,
       displayData,
       btn_contact,
       search,
-      searchResult
+      searchResult,
+      tableColumnName,
+      tableName
     };
   })();
   
@@ -98,7 +101,10 @@ const UserData = {
       //Setup event click on add
       ViewModel.btn_contact.addEventListener("click", onAddContact);
       ViewModel.search.addEventListener("keyup", onSearch);
-
+     
+      ViewModel.tableColumnName.addEventListener("click", (e) => {
+        utils.sortTable(0);
+    });
       //First render
       render.data();
     };
@@ -138,9 +144,34 @@ const UserData = {
       isValidMobile(input.mobile) && 
       isValidName(input.name)
     };
+    //Custom sort table using bubbleSort
+  const sortTable = function sortTable(column) {
+    let table = ViewModel.tableName;
+    let rows = table.rows;
+    let len = rows.length;
+    let sortOrder = table.dataset.target;
+    for (let i = 1; i < len - 1; i++) {
+        let x = rows[i].getElementsByTagName("TD")[column].innerHTML.toLowerCase();
+        let localMinIdx = i;
+        for (let j = i + 1; j <= len - 1; j++) {
+            let y = rows[j].getElementsByTagName("TD")[column].innerHTML.toLowerCase();
+            if ((sortOrder === "acs" && x > y) || (sortOrder === "desc" && x < y)) {
+                localMinIdx = j
+            } 
+      }
+      rows[i].parentNode.insertBefore(rows[localMinIdx], rows[i]);
+    }
+    
+    if (table.dataset.target === "acs") {
+      table.dataset.target = "desc";
+    } else {
+      table.dataset.target = "acs";
+    }
+  };
     
     return {
       isInputValid,
+      sortTable
     };
   })();
   
