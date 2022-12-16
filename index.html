@@ -5,28 +5,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="styles.css" />
-    <script  src="script.js"></script>
+    
   </head>
   <body>
-    <div class="margin20 textCenter flexCenter fs20">Phone Directory</div>
+    <div class="container center">
+      <div class="margin20 textCenter flexCenter fs20">Phone Directory</div>
     <div class="textCenter flexCenter">
       <div class="marginTB40 fb">
         <div>
-          <input type="text" id="name" value="" placeholder="Contact Name" />
+          <input data-content type="text" id="name" value="" placeholder="Contact Name" />
           <input
+            data-content
             type="number"
             maxlength="10"
             id="mobile"
             value=""
             placeholder="Mobile Number"
           />
-          <input type="email" id="email" value="" placeholder="Email" />
+          <input data-content type="email" id="email" value="" placeholder="Email" />
           <input
             type="submit"
             class="btn"
             id="submit"
             value="Add Contact"
-            onclick="addContact()"
           />
           <div id="error" class="dn error padT10 textCenter">Invalid Input</div>
         </div>
@@ -39,10 +40,10 @@
         Contacts Summary
       </div>
       <div id="contactSummary" class="contactSummary">
-        <table id="summaryTable">
+        <table id="summaryTable" data-target="acs" >
           <thead>
             <tr>
-              <th id="nameColumn" style="cursor: pointer">Name</th>
+              <th id="nameColumn"  style="cursor: pointer">Name</th>
               <th>Mobile</th>
               <th>Email</th>
             </tr>
@@ -58,5 +59,7 @@
         <div id="noResult" class="noResult dn">No Results Found</div>
       </div>
     </div>
+    </div>
   </body>
+  <script  src="script.js"></script>
 </html>
