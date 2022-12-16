@@ -9,11 +9,7 @@ const UserData = {
         this.users.push(data);
       }
     },
-    removeAUser: function (data) {
-      this.users = this.users.filter((user) => {
-        return !equalsUser(user, data)
-      });
-    },
+    
     getUsers: function () {
       return this.users;
     },
@@ -28,12 +24,16 @@ const UserData = {
     const btn_contact = document.getElementById("submit");
     const error = document.getElementById("error");
     const displayData = document.querySelector("tbody");
-    
+    const search = document.getElementById("search");
+    const searchResult = document.getElementById("noResult");
+
     return {
       inputList,
       error,
       displayData,
       btn_contact,
+      search,
+      searchResult
     };
   })();
   
@@ -42,7 +42,7 @@ const UserData = {
     const data = (data = UserData.getUsers()) => {
       let htmlBody = "";
       data.forEach((each) => {
-        htmlBody += ` <tr title="Click to remove this person!">
+        htmlBody += ` <tr>
               <td id="name">${each.name}</td>
               <td id="mobile">${each.mobile}</td>
               <td id="email">${each.email}</td>
@@ -62,10 +62,7 @@ const UserData = {
         data[each.id] = each.value;
       });
   
-      //Check if the input is valid.
-  
-      //If error do this
-      
+      //Check if the input is valid.      
       if (utils.isInputValid(data)) {
         ViewModel.error.style.display = "none"
           //Add
@@ -74,22 +71,34 @@ const UserData = {
         ViewModel.inputList.forEach((each) => {
           each.value = "";
         });
-        
-  
+        ViewModel.search.value = "";
         //Re-render element
         render.data();
         return;
       } else {
         ViewModel.error.style.display = "block"
-        
       }
       
     };
+
+    const onSearch = (event) => {
+        const result = UserData.getUsers().filter((each) =>
+          each.mobile.includes(event.target.value)
+        );
+        if (result.length <= 0) {
+
+          ViewModel.searchResult.style.display = "block";
+        } else {
+          ViewModel.searchResult.style.display="none";
+        }
+        render.data(result);
+      };
   
     const init = () => {
       //Setup event click on add
       ViewModel.btn_contact.addEventListener("click", onAddContact);
-  
+      ViewModel.search.addEventListener("keyup", onSearch);
+
       //First render
       render.data();
     };
@@ -129,11 +138,6 @@ const UserData = {
       isValidMobile(input.mobile) && 
       isValidName(input.name)
     };
-
-    const equalsUser = (u1, u2) => {
-        return JSON.stringify(u1) !== JSON.stringify(u2);
-    }
-  
     
     return {
       isInputValid,
